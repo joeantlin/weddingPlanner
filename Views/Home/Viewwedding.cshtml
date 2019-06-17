@@ -1,0 +1,19 @@
+@model Wedding
+
+<h1>@Model.Wedder1 & @Model.Wedder2's Wedding</h1>
+
+<a href="/">Dashboard</a> | <a href="/logout">Logout</a>
+
+<div>
+    <p>Date: @Model.Date</p>
+
+    <p>Guest: </p>
+        <ul>
+            @foreach(var i in @Model.Users)
+            {
+                <li>@i.User.FirstName @i.User.LastName</li>
+            }
+        </ul>
+
+
+</div>

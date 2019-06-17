@@ -1,0 +1,52 @@
+@model List<Wedding>
+
+<h1>Welcome to the Wedding Planner</h1>
+
+<a href="/logout">Logout</a>
+
+<table>
+    <tr>
+        <td>Wedding</td>
+        <td>Date</td>
+        <td>Guest</td>
+        <td>Action</td>
+    </tr>
+    @foreach(var i in @Model)
+    {
+        <tr>
+            <td><a href="/viewwedding/@i.Id">@i.Wedder1 & @i.Wedder2</a></td>
+            <td>@i.Date </td>
+            <td>@i.Users.Count</td>
+            <td>@{
+                    bool isTrue = false;
+                    bool creator = false;
+                    int RSVPId = 0;
+                    @foreach(var k in @i.Users)
+                    {
+                        if(k.UserId == @ViewBag.MyId)
+                        {
+                            RSVPId = k.Id;
+                            isTrue = true;
+                            creator = k.Creator;
+                        }
+                    }
+                    if (isTrue)
+                    {
+                        if (creator)
+                        {
+                            <a href="deletewedding/@i.Id">Cancel Wedding</a>
+                        } 
+                        else {
+                            <a href='@string.Format("/deletersvp/{0}", RSVPId)'>Cancel RSVP</a>
+                        }
+                    }
+                    else {
+                        <a href="newrsvp/@i.Id">RSVP</a>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<button><a href="/newwedding">New Wedding</a></button>
